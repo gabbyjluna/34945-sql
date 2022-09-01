@@ -1,0 +1,97 @@
+create schema prueba;
+use prueba;
+create table chofer (
+	idChofer int not null,
+    dni int,
+    apellido varchar(50),
+    nombre varchar(50),
+    fechaNac date,
+    fechaIngreso date,
+    primary key (idChofer)
+);
+
+create table colectivo (
+	idColectivo int not null,
+    marca varchar(50), -- especifica la marca del vehiculo
+    dominio varchar(15), -- numero de registro del vehiculo
+    nroUnidad int, -- nro de la unidad
+    index(nroUnidad),
+    primary key(idColectivo)
+    );
+    
+    create table turno (
+		idTurno int not null,
+        idChofer int not null,
+        idColectivo int not null,
+        descripcion varchar(50),
+        nombreCorte varchar(2),
+        horaIngreso time,
+        horaFin time,
+        foreign key(idChofer) references chofer(idChofer),
+        foreign key(idColectivo) references colectivo(idColectivo),
+        primary key(idTurno)
+    );
+    
+    create table asiento (
+		idAsiento int not null,
+        idColectivo int not null,
+        numero int,
+        lado varchar(10), -- puede ser ventanilla o pasillo
+        nombreCorto varchar(2), -- pasillo -> p / ventanilla -> v 
+        foreign key(idColectivo) references colectivo(idColectivo),
+        primary key(idAsiento)
+    );
+    
+    create table boleteria (
+		idBoleteria int not null,
+        nombre varchar(100), -- nombre de la sucursal 
+        direccion varchar(100),
+        primary key(idBoleteria)
+    );
+    
+    create table recorrido (
+		idRecorrido int not null,
+        sentido varchar(15),
+        primary key(idRecorrido)
+    );
+    
+    create table parada (
+		idParada int not null,
+        idRecorrido int not null,
+        nombre varchar(100), -- nombre de la parada
+        direccion varchar(100),
+        foreign key(idRecorrido) references recorrido(idRecorrido),
+        primary key(idParada)
+    );
+    
+    create table tarifa (
+		idTarifa int not null,
+        idRecorrido int not null,
+        precio float,
+        foreign key(idRecorrido) references recorrido(idRecorrido),
+        primary key(idTarifa)
+    );
+    
+    create table boleto (
+		idBoleto int not null,
+        idAsiento int not null,
+        idBoleteria int not null,
+        nroBoleto int,
+        fecha date,
+        hora time,
+        foreign key(idAsiento) references asiento(idAsiento),
+        foreign key(idBoleteria) references boleteria(idBoleteria),
+        primary key(idBoleto)
+    );
+    
+	create table viaje (
+		idViaje int not null,
+        idBoleto int not null,
+        idRecorrido int not null,
+        foreign key(idBoleto) references boleto(idBoleto),
+        foreign key(idRecorrido) references recorrido(idRecorrido),
+        primary key(idViaje)
+    );
+    
+    -- drop schema prueba;
+    
