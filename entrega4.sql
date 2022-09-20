@@ -39,7 +39,7 @@ create table asientos (
         numero int,
         lado varchar(10), -- puede ser ventanilla o pasillo
         nombreCorto varchar(2), -- pasillo -> p / ventanilla -> v / centro C
-	estado int defoult 0, -- disponible -> 0 / ocupado -> 1
+	estado int default 0, -- disponible -> 0 / ocupado -> 1
         foreign key(idColectivo) references colectivos(idColectivos),
         primary key(idAsientos)
 );
