@@ -77,6 +77,14 @@ create table tarifas (
         foreign key(idRecorrido) references recorridos(idRecorridos),
         primary key(idTarifas)
 );
+
+create table viajes (
+	idViajes int not null,
+        idRecorrido int not null,
+        fecha datetime,
+        foreign key(idRecorrido) references recorridos(idRecorridos),
+        primary key(idViajes)
+);
     
 create table boletos (
 	idBoletos int not null,
@@ -89,14 +97,6 @@ create table boletos (
         foreign key(idBoleteria) references boleterias(idBoleterias),
         foreign key(idViaje) references viajes(idViajes),
         primary key(idBoletos)
-);
-    
-create table viajes (
-	idViajes int not null,
-        idRecorrido int not null,
-        fecha datetime,
-        foreign key(idRecorrido) references recorridos(idRecorridos),
-        primary key(idViajes)
 );
     
 -- drop schema Boleteria_DB;
