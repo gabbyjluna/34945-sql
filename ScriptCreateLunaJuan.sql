@@ -83,9 +83,11 @@ create table tarifas (
 
 create table viajes (
 	idViajes int not null,
+	idColectivo int not null,
         idRecorrido int not null,
         fecha datetime,
         foreign key(idRecorrido) references recorridos(idRecorridos),
+	foreign key(idColectivo) references colectivos(idColectivos),
         primary key(idViajes)
 );
     
